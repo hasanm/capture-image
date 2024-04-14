@@ -42,20 +42,23 @@ BITMAPINFOHEADER createBitmapHeader(int width, int height)
 }
 
 
-Mat captureScreenMat(HWND hwnd)
+Mat captureScreenMat()
 {
      Mat src;
-
+     HWND hwnd = GetDesktopWindow();
      // get handles to a device context (DC)
      HDC hwindowDC = GetDC(hwnd);
      HDC hwindowCompatibleDC = CreateCompatibleDC(hwindowDC);
      SetStretchBltMode(hwindowCompatibleDC, COLORONCOLOR);
 
      // define scale, height and width
-     int screenx = GetSystemMetrics(SM_XVIRTUALSCREEN);
-     int screeny = GetSystemMetrics(SM_YVIRTUALSCREEN);
-     int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-     int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+     // int screenx = GetSystemMetrics(SM_XVIRTUALSCREEN);
+     // int screeny = GetSystemMetrics(SM_YVIRTUALSCREEN);
+     // int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+     // int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+
+     int width = GetSystemMetrics(SM_CXSCREEN);
+     int height = GetSystemMetrics(SM_CYSCREEN);
 
      // create mat object
      src.create(height, width, CV_8UC4);
@@ -68,8 +71,11 @@ Mat captureScreenMat(HWND hwnd)
      SelectObject(hwindowCompatibleDC, hbwindow);
 
      // copy from the window device context to the bitmap device context
-     StretchBlt(hwindowCompatibleDC, 0, 0, width, height, hwindowDC, screenx, screeny, width, height, SRCCOPY);  //change SRCCOPY to NOTSRCCOPY for wacky colors !
-     GetDIBits(hwindowCompatibleDC, hbwindow, 0, height, src.data, (BITMAPINFO*)&bi, DIB_RGB_COLORS);            //copy from hwindowCompatibleDC to hbwindow
+     StretchBlt(hwindowCompatibleDC, 0, 0, width, height, hwindowDC, 0, 0, width, height, SRCCOPY);
+     //change SRCCOPY to NOTSRCCOPY for wacky colors !
+
+     GetDIBits(hwindowCompatibleDC, hbwindow, 0, height, src.data, (BITMAPINFO*)&bi, DIB_RGB_COLORS);
+     //copy from hwindowCompatibleDC to hbwindow
 
      // avoid memory leak
      DeleteObject(hbwindow);
@@ -201,8 +207,8 @@ void MainWindow::onCapture(){
   convert(QString("C:\\tmp\\out.bmp"));
 
   // https://superkogito.github.io/blog/2020/07/25/capture_screen_using_opencv.html
-  // HWND hwnd = GetDesktopWindow();
-  // Mat src = captureScreenMat(hwnd);
+
+  // Mat src = captureScreenMat();
   //
   // std::vector<uchar> buf;
   // imencode(".png", src, buf);
