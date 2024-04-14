@@ -40,6 +40,7 @@ private slots:
 
   void onCapture();
   void onTimer();
+  void onSpinValueChanged(int val);
 
 private:
   QVBoxLayout *contentLayout;

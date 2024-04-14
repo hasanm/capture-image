@@ -52,6 +52,10 @@ MainWindow::MainWindow() :
   topLayout->addWidget(spinLabel);
 
   intervalBox = new QSpinBox(this);
+  intervalBox->setMinimum(1);
+  intervalBox->setValue(1);
+  connect(intervalBox, &QSpinBox::valueChanged, this,&MainWindow::onSpinValueChanged);
+  
   topLayout->addWidget(intervalBox);
 
   top->setLayout(topLayout);
@@ -91,6 +95,7 @@ void MainWindow::load(QString fileName) {
     QPixmap pix = QPixmap::fromImage(newImage);
     if (pixmap != nullptr) {
       scene->removeItem(pixmap);
+      delete pixmap; 
     }
     pixmap = scene->addPixmap(pix);
   }
@@ -238,3 +243,9 @@ void MainWindow::onTimer() {
     convert(QString("C:\\tmp\\out.bmp"));
   }
 }
+
+void MainWindow::onSpinValueChanged(int val) {
+  QMessageBox msgBox;
+  msgBox.setText(QString("The document has been modified. %1").arg(val));
+  msgBox.exec();
+} 
