@@ -31,22 +31,32 @@ class MainWindow : public QMainWindow
   ~MainWindow();
   void setWindowSizeLocation();
   void onQuit();
-
+  void capture();
+  BOOL SaveHBITMAPToFile(HBITMAP hBitmap, LPCTSTR lpszFileName);
+  void convert(QString fileName);
+  void load(QString fileName);
 
 private slots:
-  void onLoad();
+
+  void onCapture();
+  void onTimer();
 
 private:
   QVBoxLayout *contentLayout;
   QPushButton *quitButton;
+  QPushButton *captureButton;
+  QCheckBox *captureCheckBox;
+  QSpinBox *intervalBox;
+  QLabel *spinLabel;
+
+
   QGraphicsView *view;
   QGraphicsScene *scene;
   QGraphicsPixmapItem *pixmap;
   QImage image;
 
-  QTimer *timer; 
+  QTimer *timer;
 
-  cv::Mat mat;
 };
 
 #endif // MAINWINDOW_H
