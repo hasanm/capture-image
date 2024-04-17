@@ -112,16 +112,29 @@ MainWindow::MainWindow() :
   captureCheckBox = new QCheckBox(QString("Auto Capture"), this);
   topLayout->addWidget(captureCheckBox);
 
-  spinLabel = new QLabel(QString("Interval"),this);
+  spinLabel = new QLabel(QString("Interval (in ms)"),this);
   topLayout->addWidget(spinLabel);
 
-  intervalBox = new QSpinBox(this);
-  intervalBox->setMinimum(1);
-  intervalBox->setValue(1);
-  connect(intervalBox, &QSpinBox::valueChanged, this,&MainWindow::onSpinValueChanged);
+  // intervalBox = new QSpinBox(this);
+  // intervalBox->setMinimum(1);
+  // intervalBox->setValue(1);
+  // connect(intervalBox, &QSpinBox::valueChanged, this,&MainWindow::onSpinValueChanged);
 
-  topLayout->addWidget(intervalBox);
+  // topLayout->addWidget(intervalBox);
 
+  intervalTextBox = new QLineEdit(this);
+  intervalTextBox->setValidator( new QIntValidator(15, 5000, this) );
+  connect(intervalTextBox, &QLineEdit::editingFinished, this, &MainWindow::onEditingFinished);
+  intervalTextBox->setText(QString("1000"));
+
+  connect(intervalTextBox, &QLineEdit::textEdited, this , &MainWindow::onTextEdited);
+
+  topLayout->addWidget(intervalTextBox);
+
+  intervalButton = new QPushButton(QString("Apply"), this);
+  connect(intervalButton, &QPushButton::clicked, this, &MainWindow::onApply);
+  intervalButton->setEnabled(false);
+  topLayout->addWidget(intervalButton);
   top->setLayout(topLayout);
 
   /* Content Layout */
@@ -142,7 +155,7 @@ MainWindow::MainWindow() :
 
   timer = new QTimer(this);
   connect(timer,&QTimer::timeout , this, &MainWindow::onTimer);
-  timer->start(2000);
+  timer->start(1000);
 }
 
 void MainWindow::onQuit() {
@@ -321,4 +334,17 @@ void MainWindow::onSpinValueChanged(int val) {
   QMessageBox msgBox;
   msgBox.setText(QString("The document has been modified. %1").arg(val));
   msgBox.exec();
+}
+
+void MainWindow::onTextEdited(const QString &text) {
+  intervalButton->setEnabled(true);
+}
+
+
+void MainWindow::onEditingFinished() {
+  intervalButton->setEnabled(true);
+}
+
+void MainWindow::onApply() {
+  intervalButton->setEnabled(false);
 }

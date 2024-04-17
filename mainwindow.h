@@ -36,11 +36,15 @@ class MainWindow : public QMainWindow
   void convert(QString fileName);
   void load(QString fileName);
 
+
 private slots:
 
   void onCapture();
   void onTimer();
   void onSpinValueChanged(int val);
+  void onEditingFinished();
+  void onTextEdited(const QString &text);
+  void onApply();
 
 private:
   QVBoxLayout *contentLayout;
@@ -48,6 +52,8 @@ private:
   QPushButton *captureButton;
   QCheckBox *captureCheckBox;
   QSpinBox *intervalBox;
+  QLineEdit *intervalTextBox;
+  QPushButton *intervalButton;
   QLabel *spinLabel;
 
 
