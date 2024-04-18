@@ -16,6 +16,7 @@ set(CMAKE_AUTOUIC ON)
 
 add_executable( ${CMAKE_PROJECT_NAME}
                 WIN32
+                IntervalBox.cpp
                 main.cpp
                 mainwindow.cpp)
 

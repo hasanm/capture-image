@@ -9,7 +9,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
-
+#include "IntervalBox.h"
 #include <opencv2/opencv.hpp>
 
 
@@ -53,7 +53,7 @@ private:
   QPushButton *captureButton;
   QCheckBox *captureCheckBox;
   QSpinBox *intervalBox;
-  QLineEdit *intervalTextBox;
+  IntervalBox *intervalTextBox;
   QPushButton *intervalButton;
   QLabel *spinLabel;
   QShortcut *quitShortcut;

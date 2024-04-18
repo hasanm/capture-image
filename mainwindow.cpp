@@ -10,6 +10,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "IntervalBox.h"
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
@@ -112,9 +113,6 @@ MainWindow::MainWindow() :
   captureCheckBox = new QCheckBox(QString("Auto Capture"), this);
   topLayout->addWidget(captureCheckBox);
 
-  spinLabel = new QLabel(QString("Interval (in ms)"),this);
-  topLayout->addWidget(spinLabel);
-
   // intervalBox = new QSpinBox(this);
   // intervalBox->setMinimum(1);
   // intervalBox->setValue(1);
@@ -122,7 +120,10 @@ MainWindow::MainWindow() :
 
   // topLayout->addWidget(intervalBox);
 
-  intervalTextBox = new QLineEdit(this);
+  spinLabel = new QLabel(QString("Interval (in ms)"),this);
+  topLayout->addWidget(spinLabel);
+
+  intervalTextBox = new IntervalBox(this);
   intervalTextBox->setValidator( new QIntValidator(15, 5000, this) );
   connect(intervalTextBox, &QLineEdit::editingFinished, this, &MainWindow::onEditingFinished);
   intervalTextBox->setText(QString("1000"));
@@ -360,5 +361,3 @@ void MainWindow::onQuitShortcut()
 {
   qApp->quit();
 }
-
-
