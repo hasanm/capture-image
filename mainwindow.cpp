@@ -1,4 +1,4 @@
-#include <QtWidgets>
+ #include <QtWidgets>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -156,6 +156,10 @@ MainWindow::MainWindow() :
   timer = new QTimer(this);
   connect(timer,&QTimer::timeout , this, &MainWindow::onTimer);
   timer->start(1000);
+
+  quitShortcut = new QShortcut(QKeySequence(tr("Ctrl+W", "Close")),
+                           this);
+  connect(quitShortcut, &QShortcut::activated, this, &MainWindow::onQuitShortcut);
 }
 
 void MainWindow::onQuit() {
@@ -347,4 +351,14 @@ void MainWindow::onEditingFinished() {
 
 void MainWindow::onApply() {
   intervalButton->setEnabled(false);
+  timer->stop();
+  timer->start(intervalTextBox->text().toInt());
+  timer->start();
 }
+
+void MainWindow::onQuitShortcut()
+{
+  qApp->quit();
+}
+
+

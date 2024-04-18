@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-set(CMAKE_PREFIX_PATH  "${CMAKE_PREFIX_PATH};c:/Qt/6.5.2/msvc2019_64")
+set(CMAKE_PREFIX_PATH  "${CMAKE_PREFIX_PATH};c:/Qt/6.5.2/msvc2019_64;c:/opencv")
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
 find_package(OpenCV REQUIRED )

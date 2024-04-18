@@ -45,6 +45,7 @@ private slots:
   void onEditingFinished();
   void onTextEdited(const QString &text);
   void onApply();
+  void onQuitShortcut();
 
 private:
   QVBoxLayout *contentLayout;
@@ -55,6 +56,7 @@ private:
   QLineEdit *intervalTextBox;
   QPushButton *intervalButton;
   QLabel *spinLabel;
+  QShortcut *quitShortcut;
 
 
   QGraphicsView *view;
