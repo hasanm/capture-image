@@ -161,6 +161,9 @@ MainWindow::MainWindow() :
   quitShortcut = new QShortcut(QKeySequence(tr("Ctrl+W", "Close")),
                            this);
   connect(quitShortcut, &QShortcut::activated, this, &MainWindow::onQuitShortcut);
+
+  auto appIcon = QIcon(":/icons/heart.png");
+  this->setWindowIcon(appIcon);
 }
 
 void MainWindow::onQuit() {
